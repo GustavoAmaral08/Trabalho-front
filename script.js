@@ -1,3 +1,4 @@
+/* ===== Menu hambúrguer (mobile) ===== */
 function iniciarMenu() {
     const botao = document.querySelector('.menu-toggle');
     const menu = document.getElementById('menu-lista');
@@ -28,6 +29,7 @@ function iniciarMenu() {
 }
 
 
+/* ===== Slider de promoções (banner) ===== */
 function iniciarSlider() {
     const secao = document.querySelector('.promocoes');
     if (!secao) return;
@@ -46,14 +48,14 @@ function iniciarSlider() {
     let atual = 0;
     let temporizador;
 
-  
+    // Avisa leitores de tela quando o banner muda
     titulo.setAttribute('aria-live', 'polite');
 
     function mostrar(indice) {
         atual = (indice + banners.length) % banners.length;
         imagem.style.opacity = 0;
 
-
+        // Cancela a troca anterior para evitar cliques rápidos embaralhando o banner
         clearTimeout(temporizador);
         temporizador = setTimeout(() => {
             imagem.src = banners[atual].src;
@@ -68,6 +70,7 @@ function iniciarSlider() {
 }
 
 
+/* ===== Carrinho ===== */
 function iniciarCarrinho() {
     const link = document.querySelector('.fotoCarrinho');
     const contador = document.getElementById('contador-carrinho');
@@ -75,7 +78,7 @@ function iniciarCarrinho() {
 
     let total = 0;
 
-
+    // Anuncia a atualização do contador para leitores de tela
     contador.setAttribute('aria-live', 'polite');
 
     function atualizar() {
@@ -102,6 +105,7 @@ function iniciarCarrinho() {
 }
 
 
+/* ===== Animação ao rolar a página ===== */
 function iniciarRevelarAoRolar() {
     if (!('IntersectionObserver' in window)) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -122,6 +126,7 @@ function iniciarRevelarAoRolar() {
 }
 
 
+/* ===== Formulário de cadastro com validação ===== */
 function iniciarCadastro() {
     const botao = document.getElementById('abrir-cadastro');
     const formulario = document.getElementById('area-cadastro');
@@ -137,6 +142,7 @@ function iniciarCadastro() {
     const textoPadrao = 'Entrar / Conta';
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
+    // Mensagens anunciadas automaticamente por leitores de tela
     mensagem.setAttribute('role', 'alert');
     mensagem.setAttribute('aria-live', 'assertive');
 
@@ -163,7 +169,7 @@ function iniciarCadastro() {
         campo.focus();
     }
 
-
+    // Validação: retorna true se tudo estiver correto
     function validar() {
         const nome = campoNome.value.trim();
         const email = campoEmail.value.trim();
@@ -201,6 +207,7 @@ function iniciarCadastro() {
         definirFormulario(formulario.hidden);
     });
 
+    // Fecha o formulário com Esc
     document.addEventListener('keydown', evento => {
         if (evento.key === 'Escape' && !formulario.hidden) {
             definirFormulario(false);
@@ -208,6 +215,7 @@ function iniciarCadastro() {
         }
     });
 
+    // Remove o erro assim que o usuário volta a digitar
     campos.forEach(campo => {
         campo.addEventListener('input', () => {
             if (campo.hasAttribute('aria-invalid')) limparErros();
@@ -222,6 +230,8 @@ function iniciarCadastro() {
 
         formulario.reset();
 
+        // Se a mensagem estiver dentro do formulário, não o esconde,
+        // senão o usuário nunca veria o aviso de sucesso.
         if (formulario.contains(mensagem)) {
             botao.textContent = 'Fechar Cadastro';
         } else {
@@ -234,7 +244,65 @@ function iniciarCadastro() {
 }
 
 
+/* ===== Formulário de contato com validação ===== */
+function iniciarContato() {
+    const formulario = document.getElementById('form-contato');
+    const retorno = document.getElementById('retorno-contato');
+    const campoNome = document.getElementById('nome-contato');
+    const campoEmail = document.getElementById('email-contato');
+    const campoTexto = document.getElementById('texto-contato');
+    if (!formulario || !retorno || !campoNome || !campoEmail || !campoTexto) return;
+
+    const campos = [campoNome, campoEmail, campoTexto];
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+    retorno.setAttribute('role', 'alert');
+    retorno.setAttribute('aria-live', 'assertive');
+
+    function limpar() {
+        retorno.textContent = '';
+        retorno.classList.remove('erro', 'sucesso');
+        campos.forEach(campo => campo.removeAttribute('aria-invalid'));
+    }
+
+    function erro(campo, texto) {
+        retorno.textContent = texto;
+        retorno.classList.add('erro');
+        campo.setAttribute('aria-invalid', 'true');
+        campo.focus();
+    }
+
+    campos.forEach(campo => {
+        campo.addEventListener('input', () => {
+            if (campo.hasAttribute('aria-invalid')) limpar();
+        });
+    });
+
+    formulario.addEventListener('submit', evento => {
+        evento.preventDefault();
+        limpar();
+
+        const nome = campoNome.value.trim();
+        const email = campoEmail.value.trim();
+        const texto = campoTexto.value.trim();
+
+        if (!nome) return erro(campoNome, 'Informe seu nome.');
+        if (nome.length < 3) return erro(campoNome, 'O nome deve ter pelo menos 3 caracteres.');
+        if (!email) return erro(campoEmail, 'Informe seu e-mail.');
+        if (!regexEmail.test(email)) return erro(campoEmail, 'Digite um e-mail válido (ex.: nome@dominio.com).');
+        if (!texto) return erro(campoTexto, 'Escreva sua mensagem.');
+        if (texto.length < 10) return erro(campoTexto, 'A mensagem deve ter pelo menos 10 caracteres.');
+
+        formulario.reset();
+        retorno.textContent = 'Mensagem enviada com sucesso! Entraremos em contato em breve.';
+        retorno.classList.add('sucesso');
+    });
+}
+
+
+/* ===== Inicialização ===== */
 document.addEventListener('DOMContentLoaded', () => {
+    iniciarContato();
     iniciarCadastro();
     iniciarMenu();
     iniciarSlider();
