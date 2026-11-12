@@ -110,8 +110,55 @@ function iniciarRevelarAoRolar() {
         observador.observe(elemento);
     });
 }
+function iniciarCadastro() {
 
+    const botao = document.getElementById('abrir-cadastro');
+    const formulario = document.getElementById('area-cadastro');
+    const mensagem = document.getElementById('mensagem-cadastro');
+   
+  if (!botao || !formulario || !mensagem) return;
+    
+  botao.addEventListener('click', function(evento){
+
+    evento.preventDefault();
+    formulario.hidden = !formulario.hidden;
+if (formulario.hidden) {
+    botao.textContent = 'Entrar / Conta';
+} else {
+    botao.textContent = 'Fechar Cadastro';
+}
+  });
+formulario.addEventListener('submit', function(evento) {
+    evento.preventDefault();
+    const nome = document.getElementById('nome').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const senha = document.getElementById('senha').value;
+   
+   
+    
+    mensagem.textContent = '';
+    if (!nome || !email || !senha) {
+        mensagem.textContent = 'Todos os campos são obrigatórios';
+        return;
+    }
+    if (senha.length <6){
+        mensagem.textContent = 'A senha deve ter pelo menos 6 caracteres';
+        return;
+    }
+    
+    mensagem.textContent = 'Cadastro realizado com sucesso!';
+       
+    
+    formulario.reset();
+    formulario.hidden = true;
+    botao.textContent = 'Entrar / Conta';
+});
+}
+
+
+iniciarCadastro();
 iniciarMenu();
 iniciarSlider();
 iniciarCarrinho();
 iniciarRevelarAoRolar();
+
