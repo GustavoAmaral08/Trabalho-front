@@ -4,11 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js">
-
     <title>UCMart</title>
-
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 
 <body>
@@ -25,7 +23,7 @@
 
             <form action="#" method="get">
 
-                <label for="pesquisa" hidden>
+                <label for="pesquisa" class="sr-only">
                     Pesquisar produtos
                 </label>
 
@@ -36,7 +34,7 @@
                     placeholder="Pesquisar produtos"
                 >
 
-                <button type="submit">
+                <button type="submit" aria-label="Pesquisar">
                     Pesquisar
                 </button>
 
@@ -53,19 +51,19 @@
                 <strong>Olá, usuário</strong>
             </p>
 
-            <a href="#">Entrar / Conta</a>
+            <a href="#" id="abrir-cadastro">Entrar / Conta</a>
 
         </section>
 
         <!-- CARRINHO -->
-        <a href="#" class="fotoCarrinho" aria-label="Carrinho de compras com zero itens">
+        <a href="#" class="fotoCarrinho" aria-label="Carrinho de compras com 0 itens">
 
-            <img src="imagens/carrinho.png" alt="">
+            <img src="images/carrinho.png" alt="">
 
             <span>
                 <strong>Carrinho</strong>
                 <br>
-                (0 itens)
+                <span id="contador-carrinho">(0 itens)</span>
             </span>
 
         </a>
@@ -73,16 +71,54 @@
     </header>
 
 
+    <!-- CADASTRO (abre pelo link "Entrar / Conta") -->
+    <section class="cadastro-painel" aria-label="Cadastro de usuário">
+
+        <form id="area-cadastro" novalidate hidden>
+
+            <div class="campo">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" autocomplete="name">
+            </div>
+
+            <div class="campo">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" autocomplete="email">
+            </div>
+
+            <div class="campo">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" autocomplete="new-password">
+            </div>
+
+            <button type="submit" class="botao-form">Cadastrar</button>
+
+        </form>
+
+        <p id="mensagem-cadastro" class="mensagem-form"></p>
+
+    </section>
+
+
     <!-- MENU DE NAVEGAÇÃO -->
     <nav aria-label="Menu principal">
 
-        <ul>
+        <button
+            type="button"
+            class="menu-toggle"
+            aria-controls="menu-lista"
+            aria-expanded="false"
+            aria-label="Abrir menu"
+        >☰</button>
+
+        <ul id="menu-lista">
             <li><a href="#categorias">CATEGORIAS</a></li>
             <li><a href="#ofertas">OFERTAS</a></li>
             <li><a href="#eletronicos">ELETRÔNICOS</a></li>
             <li><a href="#casa">CASA</a></li>
             <li><a href="#moda">MODA</a></li>
             <li><a href="#petshop">PETSHOP</a></li>
+            <li><a href="#contato">CONTATO</a></li>
         </ul>
 
     </nav>
@@ -122,87 +158,59 @@
             </h2>
 
             <article id="eletronicos">
-
                 <a href="#">
                     <img src="images/dispositivos-eletronicos.png" alt="">
-
                     <h3>ELETRÔNICOS</h3>
-
                     <p>(TVs)</p>
                 </a>
-
             </article>
 
             <article id="casa">
-
                 <a href="#">
                     <img src="images/sofa-familia.png" alt="">
-
                     <h3>CASA</h3>
-
                     <p>(SOFÁ)</p>
                 </a>
-
             </article>
 
             <article id="moda">
-
                 <a href="#">
                     <img src="images/cabide.png" alt="">
-
                     <h3>MODA</h3>
-
                     <p>(CAMISA)</p>
                 </a>
-
             </article>
 
             <article id="beleza">
-
                 <a href="#">
                     <img src="images/batom.png" alt="">
-
                     <h3>BELEZA</h3>
-
                     <p>(BATOM)</p>
                 </a>
-
             </article>
 
             <article id="veiculos">
-
                 <a href="#">
                     <img src="images/hatchback.png" alt="">
-
                     <h3>VEÍCULOS</h3>
-
                     <p>(PNEU)</p>
                 </a>
-
             </article>
 
             <article id="academia">
-
                 <a href="#">
                     <img src="images/halteres.png" alt="">
-
                     <h3>ACADEMIA</h3>
-
                     <p>(CREATINA)</p>
                 </a>
-
             </article>
 
             <article id="petshop">
-
                 <a href="#">
                     <img src="images/comida-de-cao.png" alt="">
-
                     <h3>PET SHOP</h3>
-
                     <p>(RAÇÃO)</p>
                 </a>
-
             </article>
 
         </section>
@@ -217,15 +225,11 @@
 
             <!-- PRODUTO 1 -->
             <article class="produto">
-
                 <a href="#">
                     <img src="images/produto-fone.jpg" alt="Fone de ouvido Bluetooth preto">
-
                     <h3>Fone Bluetooth over-ear</h3>
                 </a>
-
                 <p>Som sem fios e bateria duradoura.</p>
-
                 <p aria-label="Avaliação: 4 de 5 estrelas">
                     <span class="estrelas-preenchidas">★</span>
                     <span class="estrelas-preenchidas">★</span>
@@ -233,29 +237,17 @@
                     <span class="estrelas-preenchidas">★</span>
                     <span class="estrelas-vazias">★</span>
                 </p>
-
-                <p>
-                    <strong>R$ 249,90</strong>
-                </p>
-
-                <button type="button">
-                    Adicionar ao carrinho
-                </button>
-
+                <p><strong>R$ 249,90</strong></p>
+                <button type="button">Adicionar ao carrinho</button>
             </article>
-
 
             <!-- PRODUTO 2 -->
             <article class="produto">
-
                 <a href="#">
                     <img src="images/produto-sofa.jpg" alt="Sofá verde de dois lugares">
-
                     <h3>Sofá de dois lugares</h3>
                 </a>
-
                 <p>Conforto e estilo para sua sala.</p>
-
                 <p aria-label="Avaliação: 5 de 5 estrelas">
                     <span class="estrelas-preenchidas">★</span>
                     <span class="estrelas-preenchidas">★</span>
@@ -263,29 +255,17 @@
                     <span class="estrelas-preenchidas">★</span>
                     <span class="estrelas-preenchidas">★</span>
                 </p>
-
-                <p>
-                    <strong>R$ 1.899,00</strong>
-                </p>
-
-                <button type="button">
-                    Adicionar ao carrinho
-                </button>
-
+                <p><strong>R$ 1.899,00</strong></p>
+                <button type="button">Adicionar ao carrinho</button>
             </article>
-
 
             <!-- PRODUTO 3 -->
             <article class="produto">
-
                 <a href="#">
                     <img src="images/produto-tenis.jpg" alt="Tênis esportivo vermelho">
-
                     <h3>Tênis esportivo</h3>
                 </a>
-
                 <p>Leve e confortável para treinos e caminhadas.</p>
-
                 <p aria-label="Avaliação: 4 de 5 estrelas">
                     <span class="estrelas-preenchidas">★</span>
                     <span class="estrelas-preenchidas">★</span>
@@ -293,29 +273,17 @@
                     <span class="estrelas-preenchidas">★</span>
                     <span class="estrelas-vazias">★</span>
                 </p>
-
-                <p>
-                    <strong>R$ 279,90</strong>
-                </p>
-
-                <button type="button">
-                    Adicionar ao carrinho
-                </button>
-
+                <p><strong>R$ 279,90</strong></p>
+                <button type="button">Adicionar ao carrinho</button>
             </article>
-
 
             <!-- PRODUTO 4 -->
             <article class="produto">
-
                 <a href="#">
                     <img src="images/produto-perfume.jpg" alt="Frasco do perfume Chanel Coco Noir">
-
                     <h3>Perfume Coco Noir 100 ml</h3>
                 </a>
-
                 <p>Fragrância marcante em edição importada.</p>
-
                 <p aria-label="Avaliação: 5 de 5 estrelas">
                     <span class="estrelas-preenchidas">★</span>
                     <span class="estrelas-preenchidas">★</span>
@@ -323,29 +291,17 @@
                     <span class="estrelas-preenchidas">★</span>
                     <span class="estrelas-preenchidas">★</span>
                 </p>
-
-                <p>
-                    <strong>R$ 1.199,00</strong>
-                </p>
-
-                <button type="button">
-                    Adicionar ao carrinho
-                </button>
-
+                <p><strong>R$ 1.199,00</strong></p>
+                <button type="button">Adicionar ao carrinho</button>
             </article>
-
 
             <!-- PRODUTO 5 -->
             <article class="produto">
-
                 <a href="#">
                     <img src="images/produto-halteres.jpg" alt="Halteres usados em exercício">
-
                     <h3>Kit de halteres</h3>
                 </a>
-
                 <p>Ideal para treinos práticos em casa.</p>
-
                 <p aria-label="Avaliação: 4 de 5 estrelas">
                     <span class="estrelas-preenchidas">★</span>
                     <span class="estrelas-preenchidas">★</span>
@@ -353,29 +309,17 @@
                     <span class="estrelas-preenchidas">★</span>
                     <span class="estrelas-vazias">★</span>
                 </p>
-
-                <p>
-                    <strong>R$ 149,90</strong>
-                </p>
-
-                <button type="button">
-                    Adicionar ao carrinho
-                </button>
-
+                <p><strong>R$ 149,90</strong></p>
+                <button type="button">Adicionar ao carrinho</button>
             </article>
-
 
             <!-- PRODUTO 6 -->
             <article class="produto">
-
                 <a href="#">
                     <img src="images/produto-relogio.jpg" alt="Relógios de pulso prateados">
-
                     <h3>Relógio minimalista</h3>
                 </a>
-
                 <p>Design clássico com pulseira prateada.</p>
-
                 <p aria-label="Avaliação: 4 de 5 estrelas">
                     <span class="estrelas-preenchidas">★</span>
                     <span class="estrelas-preenchidas">★</span>
@@ -383,16 +327,40 @@
                     <span class="estrelas-preenchidas">★</span>
                     <span class="estrelas-vazias">★</span>
                 </p>
-
-                <p>
-                    <strong>R$ 299,90</strong>
-                </p>
-
-                <button type="button">
-                    Adicionar ao carrinho
-                </button>
-
+                <p><strong>R$ 299,90</strong></p>
+                <button type="button">Adicionar ao carrinho</button>
             </article>
+
+        </section>
+
+
+        <!-- FORMULÁRIO DE CONTATO -->
+        <section class="contato" id="contato" aria-labelledby="titulo-contato">
+
+            <h2 id="titulo-contato">FALE COM A UCMART</h2>
+
+            <form id="form-contato" novalidate>
+
+                <div class="campo">
+                    <label for="nome-contato">Nome</label>
+                    <input type="text" id="nome-contato" name="nome" autocomplete="name">
+                </div>
+
+                <div class="campo">
+                    <label for="email-contato">E-mail</label>
+                    <input type="email" id="email-contato" name="email" autocomplete="email">
+                </div>
+
+                <div class="campo">
+                    <label for="texto-contato">Mensagem</label>
+                    <textarea id="texto-contato" name="mensagem" rows="4"></textarea>
+                </div>
+
+                <button type="submit" class="botao-form">Enviar mensagem</button>
+
+            </form>
+
+            <p id="retorno-contato" class="mensagem-form"></p>
 
         </section>
 
@@ -401,11 +369,7 @@
 
     <!-- RODAPÉ -->
     <footer>
-
-        <p>
-            &copy; 2026 UCMart. Todos os direitos reservados.
-        </p>
-
+        <p>&copy; 2026 UCMart. Todos os direitos reservados.</p>
     </footer>
 
 </body>
